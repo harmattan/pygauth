@@ -17,6 +17,12 @@ PageStackWindow {
         }
     }
 
+    QueryDialog {
+	id: aboutDialog
+	titleText: qsTr("About PyG Authenticator")
+	message: qsTr("This Authenticator provides token values needed for using two-step authentication with the big G.\nJoshua King 2012")
+    }
+
     Menu {
         id: myMenu
         visualParent: pageStack
@@ -34,7 +40,10 @@ PageStackWindow {
 					}
 				}
 			}
-			MenuItem { text: qsTr("About") }
+			MenuItem {
+				text: qsTr("About")
+				onClicked: aboutDialog.open()
+			}
         }
     }
 }
