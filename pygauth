@@ -2,12 +2,104 @@
 
 import sys
 
+from PySide import QtCore
 from PySide import QtGui
 from PySide import QtDeclarative
 import os
 
 # Comment the line below if you don't want to use OpenGL for QML rendering or if it is not supported
-from PySide import QtOpenGL
+#from PySide import QtOpenGL
+
+from math import floor, fmod
+from time import time
+
+from hashlib import sha1
+from time import time
+from base64 import b32decode
+from struct import pack, unpack_from
+import gconf
+import hmac
+
+class PasscodeGenerator(QtCore.QObject):
+	def __init__(self, secret=str()):
+		QtCore.QObject.__init__(self)
+		self._fixed = len(secret) > 0
+		if (self._fixed):
+			self._secret = secret
+		else:
+			self._secret = gconf.client_get_default().get_string('/apps/ControlPanel/PyGAuth/Secret')
+			self.secretChanged.connect(self.saveSecret)
+		self._pin = 'No secret'
+		self._timer = QtCore.QTimer(self)
+		self._timer.setSingleShot(True)
+		self._timer.timeout.connect(self.pinExpired)
+		self.secretChanged.connect(self.updatePin)
+		self.validityUpdated.connect(self.updatePin)
+		#self.connect(self._timer, SIGNAL("timeout()"), self.pinExpired)
+		#self.connect(self, SIGNAL("on_new_secret()"), self.updatePin)
+		#self.connect(self, SIGNAL("on_new_validity()"), self.updatePin)
+		self.pinExpired()
+
+	def _get_secret(self):
+		return self._secret
+
+	def _set_secret(self, secret):
+		if (secret != self._secret):
+			self._secret = secret
+			self.secretChanged.emit()
+
+	def _get_pin(self):
+		return self._pin
+
+	def _get_validity(self):
+		return 30 - fmod(time(), 30)
+
+	@QtCore.Slot()
+	def pinExpired(self):
+		self.validityUpdated.emit()
+		self._timer.setInterval(self._get_validity() * 1000)
+		self._timer.start()
+
+	@QtCore.Slot()
+	def updatePin(self):
+		if (self._secret is None or len(self._secret) == 0):
+			return
+
+		# The secret is recorded in base32
+		secret = b32decode(self._secret, True)
+
+		# The timer is every 30 seconds
+		now = time()
+		now = int( floor( now / 30 ) )
+
+		# The value is an 8-byte big endian (Java) interval number
+		value = pack("!q", now)
+
+		# The hashing algorithm is HMACSHA1
+		hm = hmac.new(secret, value, sha1)
+
+		# Get the resulting binary digest
+		digest = hm.digest()
+
+		# Truncate the hash
+		offset = unpack_from("b", digest[-1])[0] & 0xf
+		pin = (unpack_from("!i", digest, offset)[0] & 0x7FFFFFFF) % 10**6
+		if (pin != self._pin):
+			self._pin = str(pin).zfill(6)
+			self.pinChanged.emit()
+
+	@QtCore.Slot()
+	def saveSecret(self):
+		gconf.client_get_default().set_string('/apps/ControlPanel/PyGAuth/Secret', self._secret)
+
+	secretChanged = QtCore.Signal()
+	pinChanged = QtCore.Signal()
+	validityUpdated = QtCore.Signal()
+
+	secret = QtCore.Property(str, _get_secret, _set_secret, notify=secretChanged)
+	pin = QtCore.Property(str, _get_pin, notify=pinChanged)
+	validity = QtCore.Property(float, _get_validity, notify=validityUpdated)
+
 
 def main():
 
@@ -15,8 +107,15 @@ def main():
     view = QtDeclarative.QDeclarativeView()
 
     # Comment the two lines below if you don't want to use OpenGL for QML rendering or if it is not supported
-    glw = QtOpenGL.QGLWidget()
-    view.setViewport(glw)
+    #glw = QtOpenGL.QGLWidget()
+    #view.setViewport(glw)
+
+    secret = str()
+    if (len(app.arguments()) == 2):
+        secret = app.arguments()[1]
+
+    pcg = PasscodeGenerator(secret)
+    view.rootContext().setContextProperty('passcodeGenerator', pcg)
 
     if os.path.exists('/usr/share/pygauth/qml'):
         view.setSource('/usr/share/pygauth/qml/main.qml')
@@ -24,7 +123,7 @@ def main():
         view.setSource(os.path.join('qml','main.qml'))
 
     view.showFullScreen()
-    app.exec_()
+    sys.exit(app.exec_())
 
 if __name__ == "__main__":
     main()
