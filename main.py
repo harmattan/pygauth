@@ -13,13 +13,19 @@ from hashlib import sha1
 from time import time
 from base64 import b32decode
 from struct import pack, unpack_from
+import gconf
 import hmac
 
 class PasscodeGenerator(QObject):
 	def __init__(self, secret=str()):
 		QObject.__init__(self)
-		self._secret = secret
-		self._pin = str()
+		self._fixed = len(secret) > 0
+		if (self._fixed):
+			self._secret = secret
+		else:
+			self._secret = gconf.client_get_default().get_string('/apps/ControlPanel/PyGAuth/Secret')
+			self.secretChanged.connect(self.saveSecret)
+		self._pin = 'No secret'
 		self._timer = QTimer(self)
 		self._timer.setSingleShot(True)
 		self._timer.timeout.connect(self.pinExpired)
@@ -52,11 +58,11 @@ class PasscodeGenerator(QObject):
 
 	@Slot()
 	def updatePin(self):
-		if (self._secret == str()):
-			pass
+		if (self._secret is None or len(self._secret) == 0):
+			return
 
 		# The secret is recorded in base32
-		secret = b32decode(self._secret)
+		secret = b32decode(self._secret, True)
 
 		# The timer is every 30 seconds
 		now = time()
@@ -77,6 +83,10 @@ class PasscodeGenerator(QObject):
 		if (pin != self._pin):
 			self._pin = str(pin).zfill(6)
 			self.pinChanged.emit()
+
+	@Slot()
+	def saveSecret(self):
+		gconf.client_get_default().set_string('/apps/ControlPanel/PyGAuth/Secret', self._secret)
 
 	secretChanged = Signal()
 	pinChanged = Signal()
