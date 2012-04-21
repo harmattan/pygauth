@@ -8,9 +8,19 @@ PageStackWindow {
 
     MainPage{id: mainPage}
 
+    TextField {
+        id: shadowPin
+        text: passcodeGenerator.pin
+        visible: false
+    }
+
     ToolBarLayout {
         id: commonTools
         visible: true
+        ToolButton {
+             text: qsTr("Copy")
+             onClicked: { shadowPin.selectAll(); shadowPin.copy() }
+        }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
              onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
