@@ -23,7 +23,7 @@ Page {
 		verticalAlignment: Text.AlignVCenter
 		platformStyle: LabelStyle {
 			textColor: "#000099"
-			fontPixelSize: 80
+			fontPixelSize: (parent.width > parent.height) ? 0.5 * parent.height : 0.25 * parent.width
 		}
 
 		NumberAnimation {
