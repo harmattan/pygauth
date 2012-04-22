@@ -15,6 +15,28 @@ Page {
 		anchors.left: parent.left
 	}
 
+	ProgressBar {
+		id: bar
+		width: parent.width
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+
+		NumberAnimation {
+			id: animateValue
+			target: bar
+			properties: "value"
+			from: 0.0
+			to: 1.0
+		}
+
+		Connections {
+			target: passcodeGenerator
+			onValidityUpdated: { animateValue.from = (30 - passcodeGenerator.validity) / 30; animateValue.duration = passcodeGenerator.validity * 1000; animateValue.start() }
+		}
+
+		Component.onCompleted: { if (!animateValue.running) { animateValue.from = (30 - passcodeGenerator.validity) / 30; animateValue.duration = passcodeGenerator.validity * 1000; animateValue.start() } }
+	}
+
 	Label {
 		id: pinLabel
 		anchors.fill: parent
