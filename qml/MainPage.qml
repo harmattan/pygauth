@@ -134,7 +134,7 @@ Page {
 				animateColor.duration = (v - 3) * 1000
 				animateColor.start()
 			} else if (!animateColor.running) {
-				pinLabel.textColor = animateColor.to
+				pinStyle.textColor = animateColor.to
 			}
 		}
 	}

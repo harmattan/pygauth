@@ -43,6 +43,24 @@ class PasscodeGenerator(QtCore.QObject):
 		#self.connect(self, SIGNAL("on_new_validity()"), self.updatePin)
 		self.pinExpired()
 
+	def setFromURI(self, uri):
+		validprefix = 'otpauth://totp/'
+		if (uri[:len(validprefix)] != validprefix):
+			return False
+		uri = uri[len(validprefix):]
+		name = uri[:uri.find('?')]
+		params = uri[len(name)+1:].split('&')
+		secret = None
+		for p in params:
+			s = p.split('=', 1)
+			if s[0] == 'secret':
+				secret = s[1]
+		if secret is None:
+			return False
+		self._set_name(name)
+		self._set_secret(secret)
+		return True
+
 	def _get_secret(self):
 		return self._secret
 
@@ -105,7 +123,7 @@ class PasscodeGenerator(QtCore.QObject):
 
 	@QtCore.Slot()
 	def saveName(self):
-		gconf.client_get_default().set_string('/apps/ControlPanel/PyGAuth/Name')
+		gconf.client_get_default().set_string('/apps/ControlPanel/PyGAuth/Name', self._name)
 
 	secretChanged = QtCore.Signal()
 	nameChanged = QtCore.Signal()
@@ -127,11 +145,11 @@ def main():
     #glw = QtOpenGL.QGLWidget()
     #view.setViewport(glw)
 
-    secret = str()
-    if (len(app.arguments()) == 2):
-        secret = app.arguments()[1]
+    pcg = PasscodeGenerator()
 
-    pcg = PasscodeGenerator(secret)
+    if (len(app.arguments()) == 2):
+        pcg.setFromURI(app.arguments()[1])
+
     view.rootContext().setContextProperty('passcodeGenerator', pcg)
 
     if os.path.exists('/usr/share/pygauth/qml'):
