@@ -31,10 +31,20 @@ Page {
 
 		Connections {
 			target: passcodeGenerator
-			onValidityUpdated: { animateValue.from = (30 - passcodeGenerator.validity) / 30; animateValue.duration = passcodeGenerator.validity * 1000; animateValue.start() }
+			onValidityUpdated: {
+				animateValue.from = 0.0;
+				animateValue.duration = passcodeGenerator.validity * 1000; 
+				animateValue.restart() 
+			}
 		}
 
-		Component.onCompleted: { if (!animateValue.running) { animateValue.from = (30 - passcodeGenerator.validity) / 30; animateValue.duration = passcodeGenerator.validity * 1000; animateValue.start() } }
+		Component.onCompleted: { 
+			if (!animateValue.running) { 
+				animateValue.from = (30 - passcodeGenerator.validity) / 30; 
+				animateValue.duration = passcodeGenerator.validity * 1000;
+				animateValue.start() 
+			}
+		}
 	}
 
 	Label {
@@ -44,6 +54,7 @@ Page {
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
 		platformStyle: LabelStyle {
+			id: pinStyle
 			textColor: "#000099"
 			fontPixelSize: (parent.width > parent.height) ? 0.5 * parent.height : 0.25 * parent.width
 		}
@@ -54,11 +65,31 @@ Page {
 			properties: "opacity"
 			from: 1.0
 			to: 0.0
+			easing.type: Easing.InQuart
+		}
+
+		ColorAnimation {
+			id: animateColor
+			target: pinStyle
+			properties: "textColor"
+			from: "#000099"
+			to: "#990000"
+			easing.type: Easing.InQuart
 		}
 	
 		Connections {
 			target: passcodeGenerator
-			onValidityUpdated: { animateOpacity.duration = passcodeGenerator.validity * 1000; animateOpacity.start(); }
+			onValidityUpdated: {
+				var v = passcodeGenerator.validity
+				animateOpacity.duration = v * 1000;
+				animateOpacity.restart();
+				if (v > 3) {
+					animateColor.duration = (v - 3) * 1000
+					animateColor.restart()
+				} else {
+					pinLabel.textColor = animateColor.to
+				}
+			}
 		}
 
 		Connections {
@@ -66,6 +97,18 @@ Page {
 			onPinChanged: { console.log("Pin changed to: " + passcodeGenerator.pin); animateOpacity.stop(); pinLabel.opacity = 1.0 }
 		}
 
-		Component.onCompleted: if (!animateOpacity.running) { animateOpacity.duration = passcodeGenerator.validity * 1000; animateOpacity.start(); }
+		Component.onCompleted: {
+			var v = passcodeGenerator.validity
+			if (!animateOpacity.running) {
+				animateOpacity.duration = v * 1000;
+				animateOpacity.start();
+			}
+			if (v > 3 && !animateColor.running) {
+				animateColor.duration = (v - 3) * 1000
+				animateColor.start()
+			} else if (!animateColor.running) {
+				pinLabel.textColor = animateColor.to
+			}
+		}
 	}
 }
