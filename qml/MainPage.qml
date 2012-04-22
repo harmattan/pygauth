@@ -16,7 +16,7 @@ Page {
 //		}
 		Label {
 			id: nameLabel
-			text: "PIN"
+			text: passcodeGenerator.name
 			anchors.centerIn: parent
 			width: parent.width
 			platformStyle: LabelStyle {
