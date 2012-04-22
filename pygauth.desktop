@@ -4,5 +4,5 @@ Version=1.0
 Type=Application
 Name=PyG Authenticator
 Exec=invoker --single-instance --type=e /usr/bin/pygauth
-Icon=/usr/share/icons/hicolor/64x64/apps/pygauth.png
+Icon=/usr/share/icons/hicolor/64x64/apps/pygauth64.png
 Categories=Utility;
