@@ -7,6 +7,30 @@ Page {
 
     property alias secretText: secretText
 
+	Rectangle {
+		id: nameRect
+		color: "#000099"
+//		gradient: Gradient {
+//         		GradientStop { position: 0.8; color: "#000099" }
+//         		GradientStop { position: 1.0; color: mainPage.color }
+//		}
+		Label {
+			id: nameLabel
+			text: "PIN"
+			anchors.centerIn: parent
+			width: parent.width
+			platformStyle: LabelStyle {
+				textColor: "#ffffff"
+			}
+			horizontalAlignment: Text.AlignHCenter
+			verticalAlignment: Text.AlignVCenter
+		}
+		anchors.top: parent.top
+		anchors.left: parent.left
+		width: parent.width
+		height: nameLabel.height * 2
+	}
+
 	TextField {
 		id: secretText
 		opacity: 0.0
@@ -18,7 +42,7 @@ Page {
 	ProgressBar {
 		id: bar
 		width: parent.width
-		anchors.bottom: parent.bottom
+		anchors.top: nameRect.bottom
 		anchors.left: parent.left
 
 		NumberAnimation {
@@ -49,7 +73,10 @@ Page {
 
 	Label {
 		id: pinLabel
-		anchors.fill: parent
+		width: parent.width
+		anchors.top: bar.bottom
+		anchors.bottom: parent.bottom
+//		anchors.fill: parent
 		text: passcodeGenerator.pin
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
