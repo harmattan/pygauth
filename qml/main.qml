@@ -29,8 +29,8 @@ PageStackWindow {
 
     QueryDialog {
 	id: aboutDialog
-	titleText: qsTr("About PyG Authenticator")
-	message: qsTr("This Authenticator provides token values needed for using two-step authentication with the big G.\nJoshua King 2012")
+	titleText: qsTr("About GAuth")
+	message: qsTr("This Authenticator provides token values needed for using two-step authentication with Google or other online services..\nJoshua King 2012")
     }
 
     Menu {

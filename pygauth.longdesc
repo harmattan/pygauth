@@ -1,4 +1,9 @@
-This file should contain a writeup describing what your application does,
-and how to use it. The content of this file goes into the long_description
-field of setup.py, which in turn becomes the long version of the Description
-field in the debian/control file of the project.
+This Authenticator generates tokens for use with
+two-step verification with Google's online services.
+Simply copy your Authenticator key into the phone's
+Settings application or use the link/QR code provided
+to set up the token. This application will then
+constantly update with the current login code.
+Please note that your phone's time must be correct
+in order to generate valid codes.
+No data is consumed by this application.

@@ -1,11 +1,11 @@
 [Project]
 category = Utility
 maintainer = user
-appname = PyG Authenticator
+appname = GAuth
 section = development
-pyversion = 2.7
+pyversion = 2.6
 project = pygauth
-email = email@example.com
+email = jking_ok@yahoo.com.au
 desc = Authenticator for online services
 template = harmattan
 
