@@ -130,11 +130,15 @@ class PasscodeGenerator(QtCore.QObject):
 
 	@QtCore.Slot()
 	def openSettings(self):
+		service = 'com.nokia.DuiControlPanel'
+		path = '/'
+		interface = 'com.nokia.DuiControlPanelIf'
+		#method = 'appletPage'
 		# Get the session bus
 		bus = dbus.SessionBus()
-		proxy = bus.get_object('com.nokia.DuiControlPanel', '/')
-		interface = dbus.Interface(proxy, 'com.nokia.DuiControlPanelIf')
-		interface.appletPage('GAuth')
+		proxy = bus.get_object(service, path)
+		connection = dbus.Interface(proxy, interface)
+		connection.appletPage('GAuth')
 
 	secretChanged = QtCore.Signal()
 	nameChanged = QtCore.Signal()
