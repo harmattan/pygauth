@@ -8,10 +8,13 @@ PageStackWindow {
 
     initialPage: mainPage
 
-    MainPage{
+    MainPage {
 	id: mainPage
+    }
 
-	onStatusChanged: if (status == PageStatus.Active) passcodeGenerator.readConfig()
+    Connections {
+        target: platformWindow
+	onActiveChanged: if (platformWindow.active) passcodeGenerator.readConfig()
     }
 
     TextField {
