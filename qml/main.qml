@@ -4,6 +4,8 @@ import com.nokia.meego 1.1
 PageStackWindow {
     id: appWindow
 
+    property string version: "1.0"
+
     initialPage: mainPage
 
     MainPage{id: mainPage}
@@ -29,8 +31,9 @@ PageStackWindow {
 
     QueryDialog {
 	id: aboutDialog
-	titleText: qsTr("About GAuth")
-	message: qsTr("This Authenticator provides token values needed for using two-step authentication with Google or other online services..\nJoshua King 2012")
+	icon: "file:///usr/share/icons/hicolor/80x80/apps/pygauth80.png"
+	titleText: qsTr("About GAuth v") + version
+	message: qsTr("This Authenticator provides token values needed for using two-step authentication with Google or other online services.\nCopyright Joshua King 2012")
     }
 
     Menu {
