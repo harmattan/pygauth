@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ControlPanelApplet
-Name=GAuth Settings
+Name=GAuth
 X-logical-id=decl_exampl_1
 X-translation-catalog=duisettings
 Icon=
@@ -8,7 +8,7 @@ Icon=
 X-Maemo-Service=com.nokia.DuiControlPanel
 X-Maemo-Method=com.nokia.DuiControlPanelIf.appletPage
 X-Maemo-Object-Path=/
-X-Maemo-Fixed-Args=GAuth Settings
+X-Maemo-Fixed-Args=GAuth
 
 [DUI]
 X-DUIApplet-Applet=libdeclarative.so

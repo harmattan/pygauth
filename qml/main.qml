@@ -37,6 +37,10 @@ PageStackWindow {
         id: myMenu
         visualParent: pageStack
         MenuLayout {
+			MenuItem {
+				text: "Open Settings"
+				onClicked: passcodeGenerator.openSettings()
+			}
 			MenuItem { 
 				text: mainPage.secretText.opacity == 0.0 ? qsTr("Show secret") : qsTr("Hide secret")
 				onClicked: {

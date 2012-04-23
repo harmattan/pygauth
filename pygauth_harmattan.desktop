@@ -2,8 +2,9 @@
 Encoding=UTF-8
 Version=1.0
 Type=Application
+Terminal=false
 Name=GAuth
-Exec=invoker --single-instance --type=e /opt/pygauth/bin/pygauth
-Icon=/usr/share/icons/hicolor/80x80/apps/pygauth64.png
+Exec=invoker --single-instance --type=e /opt/pygauth/bin/pygauth %U
+Icon=/usr/share/icons/hicolor/80x80/apps/pygauth80.png
 Categories=Utility;
-MimeType=x-maemo-urischeme/otpauth
+MimeType=x-maemo-urischeme/otpauth;

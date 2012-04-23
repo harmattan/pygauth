@@ -20,6 +20,9 @@ from struct import pack, unpack_from
 import gconf
 import hmac
 
+import dbus
+import dbus.mainloop.glib
+
 class PasscodeGenerator(QtCore.QObject):
 	def __init__(self, secret=str()):
 		QtCore.QObject.__init__(self)
@@ -125,6 +128,14 @@ class PasscodeGenerator(QtCore.QObject):
 	def saveName(self):
 		gconf.client_get_default().set_string('/apps/ControlPanel/PyGAuth/Name', self._name)
 
+	@QtCore.Slot()
+	def openSettings(self):
+		# Get the session bus
+		bus = dbus.SessionBus()
+		proxy = bus.get_object('com.nokia.DuiControlPanel', '/')
+		interface = dbus.Interface(proxy, 'com.nokia.DuiControlPanelIf')
+		interface.appletPage('GAuth')
+
 	secretChanged = QtCore.Signal()
 	nameChanged = QtCore.Signal()
 	pinChanged = QtCore.Signal()
@@ -137,6 +148,9 @@ class PasscodeGenerator(QtCore.QObject):
 
 
 def main():
+
+    # Enable glib main loop support
+    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
     app = QtGui.QApplication(sys.argv)
     view = QtDeclarative.QDeclarativeView()
