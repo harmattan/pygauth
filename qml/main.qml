@@ -48,19 +48,19 @@ PageStackWindow {
 				text: "Open Settings"
 				onClicked: passcodeGenerator.openSettings()
 			}
-			MenuItem { 
-				text: mainPage.secretText.opacity == 0.0 ? qsTr("Show secret") : qsTr("Hide secret")
-				onClicked: {
-					if (mainPage.secretText.opacity == 0.0) {
-						mainPage.secretText.text = passcodeGenerator.secret
-						mainPage.secretText.opacity = 1.0
-						mainPage.secretText.focus = true
-					} else {
-						mainPage.secretText.opacity = 0.0
-						passcodeGenerator.secret = mainPage.secretText.text
-					}
-				}
-			}
+//			MenuItem { 
+//				text: mainPage.secretText.opacity == 0.0 ? qsTr("Show secret") : qsTr("Hide secret")
+//				onClicked: {
+//					if (mainPage.secretText.opacity == 0.0) {
+//						mainPage.secretText.text = passcodeGenerator.secret
+//						mainPage.secretText.opacity = 1.0
+//						mainPage.secretText.focus = true
+//					} else {
+//						mainPage.secretText.opacity = 0.0
+//						passcodeGenerator.secret = mainPage.secretText.text
+//					}
+//				}
+//			}
 			MenuItem {
 				text: qsTr("About")
 				onClicked: aboutDialog.open()
