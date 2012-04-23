@@ -143,6 +143,12 @@ class PasscodeGenerator(QtCore.QObject):
 		#connection.appletPage('GAuth')
 		call(['dbus-send','--session','--dest=com.nokia.DuiControlPanel','--print-reply','/','com.nokia.DuiControlPanelIf.appletPage',"string:GAuth"])
 
+	@QtCore.Slot()
+	def readConfig(self):
+		self.secret = gconf.client_get_default().get_string('/apps/ControlPanel/PyGAuth/Secret')
+		self.name = gconf.client_get_default().get_string('/apps/ControlPanel/PyGAuth/Name')
+
+
 	secretChanged = QtCore.Signal()
 	nameChanged = QtCore.Signal()
 	pinChanged = QtCore.Signal()

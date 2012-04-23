@@ -8,7 +8,11 @@ PageStackWindow {
 
     initialPage: mainPage
 
-    MainPage{id: mainPage}
+    MainPage{
+	id: mainPage
+
+	onStatusChanged: if (windowState.active) passcodeGenerator.readConfig()
+    }
 
     TextField {
         id: shadowPin
