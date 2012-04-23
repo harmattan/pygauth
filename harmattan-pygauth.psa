@@ -1,6 +1,6 @@
 [Project]
 category = Utility
-maintainer = user
+maintainer = Joshua King
 appname = GAuth
 section = development
 pyversion = 2.6

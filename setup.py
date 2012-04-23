@@ -7,10 +7,12 @@ def read(fname):
 setup(name="pygauth",
       scripts=['pygauth'],
       version='0.1.0',
-      maintainer="user",
-      maintainer_email="email@example.com",
+      maintainer="Joshua King",
+      maintainer_email="jking_ok@yahoo.com.au",
       description="Authenticator for online services",
       long_description=read('pygauth.longdesc'),
-      data_files=[('share/applications',['pygauth.desktop']),
+      data_files=[('/opt/pygauth/bin', ['pygauth']),
+                  ('share/applications',['pygauth_harmattan.desktop']),
                   ('share/icons/hicolor/64x64/apps', ['pygauth.png']),
-                  ('share/pygauth/qml', glob.glob('qml/*.qml')), ],)
+                  ('share/icons/hicolor/80x80/apps', ['pygauth80.png']),
+                  ('/opt/pygauth/qml', glob.glob('qml/*.qml')), ],)

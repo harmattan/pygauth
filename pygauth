@@ -152,8 +152,8 @@ def main():
 
     view.rootContext().setContextProperty('passcodeGenerator', pcg)
 
-    if os.path.exists('/usr/share/pygauth/qml'):
-        view.setSource('/usr/share/pygauth/qml/main.qml')
+    if os.path.exists('/opt/pygauth/qml'):
+        view.setSource('/opt/pygauth/qml/main.qml')
     else:
         view.setSource(os.path.join('qml','main.qml'))
 
