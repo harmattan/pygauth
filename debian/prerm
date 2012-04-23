@@ -1,0 +1,3 @@
+#!/bin/sh
+/usr/bin/aegis-exec -s -u user /usr/bin/gconftool --recursive-unset /apps/ControlPanel/PyGAuth
+exit 0
