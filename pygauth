@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2.6
 
 import sys
 
@@ -22,6 +22,8 @@ import hmac
 
 import dbus
 import dbus.mainloop.glib
+
+from subprocess import call
 
 class PasscodeGenerator(QtCore.QObject):
 	def __init__(self, secret=str()):
@@ -130,15 +132,16 @@ class PasscodeGenerator(QtCore.QObject):
 
 	@QtCore.Slot()
 	def openSettings(self):
-		service = 'com.nokia.DuiControlPanel'
-		path = '/'
-		interface = 'com.nokia.DuiControlPanelIf'
-		#method = 'appletPage'
-		# Get the session bus
-		bus = dbus.SessionBus()
-		proxy = bus.get_object(service, path)
-		connection = dbus.Interface(proxy, interface)
-		connection.appletPage('GAuth')
+		#service = 'com.nokia.DuiControlPanel'
+		#path = '/'
+		#interface = 'com.nokia.DuiControlPanelIf'
+		##method = 'appletPage'
+		## Get the session bus
+		#bus = dbus.SessionBus()
+		#proxy = bus.get_object(service, path)
+		#connection = dbus.Interface(proxy, interface)
+		#connection.appletPage('GAuth')
+		call(['dbus-send','--session','--dest=com.nokia.DuiControlPanel','--print-reply','/','com.nokia.DuiControlPanelIf.appletPage',"string:GAuth"])
 
 	secretChanged = QtCore.Signal()
 	nameChanged = QtCore.Signal()
