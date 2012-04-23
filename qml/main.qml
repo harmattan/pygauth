@@ -11,7 +11,7 @@ PageStackWindow {
     MainPage{
 	id: mainPage
 
-	onStatusChanged: if (windowState.active) passcodeGenerator.readConfig()
+	onStatusChanged: if (status == PageStatus.Active) passcodeGenerator.readConfig()
     }
 
     TextField {
