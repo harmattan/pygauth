@@ -6,3 +6,4 @@ Name=GAuth
 Exec=invoker --single-instance --type=e /opt/pygauth/bin/pygauth
 Icon=/usr/share/icons/hicolor/80x80/apps/pygauth64.png
 Categories=Utility;
+MimeType=x-maemo-urischeme/otpauth
