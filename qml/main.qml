@@ -8,10 +8,13 @@ PageStackWindow {
 
     initialPage: mainPage
 
-    MainPage{
+    MainPage {
 	id: mainPage
+    }
 
-	onStatusChanged: if (status == PageStatus.Active) passcodeGenerator.readConfig()
+    Connections {
+        target: platformWindow
+	onActiveChanged: if (platformWindow.active) passcodeGenerator.readConfig()
     }
 
     TextField {
@@ -27,6 +30,9 @@ PageStackWindow {
              text: qsTr("Copy")
              onClicked: { shadowPin.selectAll(); shadowPin.copy() }
         }
+	ToolIcon { platformIconId: "toolbar-settings";
+             onClicked: passcodeGenerator.openSettings()
+	}
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
              onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
@@ -44,10 +50,6 @@ PageStackWindow {
         id: myMenu
         visualParent: pageStack
         MenuLayout {
-			MenuItem {
-				text: "Open Settings"
-				onClicked: passcodeGenerator.openSettings()
-			}
 //			MenuItem { 
 //				text: mainPage.secretText.opacity == 0.0 ? qsTr("Show secret") : qsTr("Hide secret")
 //				onClicked: {
