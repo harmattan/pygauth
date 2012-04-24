@@ -1,5 +1,5 @@
-harmattan-pygauth
-=================
+GAuth
+=====
 
 Python-Qt-QML hybrid implementation of Authenticator for Nokia N9
 
@@ -20,7 +20,7 @@ Installation
 ------------
 
 Get it from the Nokia Store (coming soon) or
-download from the Downloads tab on [GitHub][gh].
+download from the [Downloads][dl] tab on [GitHub][gh].
 
 Either way should install the dependencies automatically.
 If not, these are:
@@ -52,9 +52,11 @@ You can also update your settings by URI. These
 are embedded typically in QR codes.
 
 Unfortunately the current version of MeeScan won't send such a code directly to GAuth. However the following will work:
+
 1. Open MeeScan and scan the barcode.
-2  Copy the text to the clipboard.
+2. Copy the text to the clipboard.
 3. Open Web and paste the text and press Go.
 4. GAuth should open and the new settings will be applied if they are understood.
 
+[dl]: https://github.com/jkingok/oharmattan-pygauth/downloads
 [gh]: https://github.com/jkingok/harmattan-pygauth/
