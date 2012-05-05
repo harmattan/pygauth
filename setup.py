@@ -8,7 +8,7 @@ def read(fname):
 
 setup(name="pygauth",
       scripts=['pygauth'],
-      version='1.0',
+      version='1.1',
       maintainer="Joshua King",
       maintainer_email="jking_ok@yahoo.com.au",
       description="Authenticator for online services",
