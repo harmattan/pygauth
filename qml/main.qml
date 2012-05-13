@@ -64,6 +64,10 @@ PageStackWindow {
 //				}
 //			}
 			MenuItem {
+				text: qsTr((mainPage.help.visible ? "Hide" : "Show") + " help")
+				onClicked: mainPage.help.visible = !mainPage.help.visible
+			}
+			MenuItem {
 				text: qsTr("About")
 				onClicked: aboutDialog.open()
 			}

@@ -1,0 +1,67 @@
+<html>
+  	<body>
+        	<h1><img src="pygauth.png" />GAuth Help</h1>
+                <p>Below are instructions for using <i>GAuth</i>. To return to
+                <i>GAuth</i>, tap the <b>Menu</b> button at the right of the
+                bottom toolbar and then tap <b>Hide help</b>.</p>
+                <p>To see more information, go online to
+                <u>http://techtransit.blogspot.com/p/gauth.html</u>.</p>
+                <h2>Setting up your account</h2>
+                <p><b>Note:</b> If you have previously set up an Authenticator
+                on a different device you will need to repeat the process (ie,
+                redo on Google) unless you recorded the secret. The secret
+                cannot be extracted from <i>Google Authenticator</i> by an end
+                user. If you did record the secret skip to step ? below.</p>
+                <p>To set up your account, go to Google's two-step
+                authentication settings at <u>https://account.google.com</u> on
+                your phone or computer web browser and follow these steps:</p>
+                <ol>
+                	<li>Follow Google's process, selecting <b>Android</b>
+                        when asked to identify your device.</li>
+                        <li>If on a computer:
+                        	<ol>
+                                    <li>Scan the QR code with the <i>MeeScan</i>
+                                    application.</li>
+                                    <li>Once the code is recognised, <b>copy
+                                    all</b> of the text to the clipboard.</li>
+                                    <li>Open the <i>Web</i> application and
+                                    <b>paste</b> the text into the address bar
+                                    and tap <b>Go</b>.</li>
+                                    <li><i>GAuth</i> should now reopen with the
+                                    token loaded. If it doesn't, <b>quit</b> it
+                                    fully first and retry from <i>Web</i>,
+                                    otherwise follow the next procedure.</li>
+                                </ol></li>
+                        <li>If on the phone or the above procedure didn't work:
+                        	<ol>
+                                	<li>Tap the link which says <b>Can't
+                                        scan the code?</b>.</li>
+                                        <li>Copy the secret to the clipboard.
+                                        </li>
+                                        <li>Open <i>GAuth</i> and tap the <b>
+                                        Settings</b> cog in the bottom toolbar.
+                                        </li>
+                                        <li>If only a black screen and no
+                                        settings appear you need to reboot your
+                                        phone and copy the secret to the
+                                        clipboard again.</li>
+                                        <li>Enter the name you would like for
+                                        the token in the <b>Name</b> area.</li>
+                                	<li>Paste the secret into the
+                                        <b>Secret</b> area.</li>
+                                        <li>Quit the settings screen and return
+                                        to <i>GAuth</i>. It should now reload
+                                        with the new token.</li>
+                                </ol></li>
+                </ol>
+                <h2>Using the token</h2>
+                <p>To use the token simply load <i>GAuth</i> when Google requests
+                a code. Then type the value displayed into the web browser. If
+                the Google request is on the phone itself you can press
+                <b>Copy</b> on the bottom toolbar and then use paste in the
+                Google form. The code autmatically updates every 30 seconds and
+                turns red to indicate when it is about to expire.</p>
+                <p>If <i>No secret</i> is shown, you must first redo the setup
+                procedure above.</p>
+        </body>
+</html>

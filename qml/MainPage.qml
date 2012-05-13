@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import QtWebKit 1.0
 import com.nokia.meego 1.0
 
 Page {
@@ -6,6 +7,7 @@ Page {
     tools: commonTools
 
     property alias secretText: secretText
+    property alias help: help
 
 	Rectangle {
 		id: nameRect
@@ -130,12 +132,35 @@ Page {
 				animateOpacity.duration = v * 1000;
 				animateOpacity.start();
 			}
+
 			if (v > 3 && !animateColor.running) {
 				animateColor.duration = (v - 3) * 1000
 				animateColor.start()
 			} else if (!animateColor.running) {
 				pinStyle.textColor = animateColor.to
 			}
+
+			if (passcodeGenerator.secret == '')
+				help.visible = true
 		}
 	}
+
+    Flickable {
+        visible: false
+        id: help
+        anchors.fill: parent
+        clip: true
+        contentWidth: parent.width
+        contentHeight: web.height
+
+        WebView {
+            id: web
+	    url: "file://" + host.root + "html/help.html"
+            preferredWidth: parent.width
+        }
+    }
+
+    ScrollDecorator {
+        flickableItem: help
+    }
 }
