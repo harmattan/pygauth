@@ -25,6 +25,19 @@ import dbus.mainloop.glib
 
 from subprocess import call
 
+class Host(QtCore.QObject):
+	def __init__(self, root):
+		QtCore.QObject.__init__(self)
+		self._root = root
+
+	def _get_root(self):
+		return self._root
+
+	rootChanged = QtCore.Signal()
+
+	root = QtCore.Property(str, _get_root, notify=rootChanged)
+
+
 class PasscodeGenerator(QtCore.QObject):
 	def __init__(self, secret=str()):
 		QtCore.QObject.__init__(self)
@@ -179,10 +192,12 @@ def main():
 
     view.rootContext().setContextProperty('passcodeGenerator', pcg)
 
-    if os.path.exists('/opt/pygauth/qml'):
-        view.setSource('/opt/pygauth/qml/main.qml')
-    else:
+    if os.path.exists(os.path.join('qml', 'main.qml')):
+	view.rootContext().setContextProperty('host', Host(os.getcwd()+'/'))
         view.setSource(os.path.join('qml','main.qml'))
+    else:
+	view.rootContext().setContextProperty('host', Host('/opt/pygauth/'))
+        view.setSource('/opt/pygauth/qml/main.qml')
 
     view.showFullScreen()
     sys.exit(app.exec_())
