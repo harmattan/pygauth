@@ -17,5 +17,6 @@ setup(name="pygauth",
                   ('/usr/share/icons/hicolor/64x64/apps', ['pygauth.png']),
                   ('/usr/share/icons/hicolor/80x80/apps', ['pygauth80.png']),
                   ('/opt/pygauth/qml', glob.glob('qml/*.qml')),
+		  ('/opt/pygauth/html', glob.glob('html/*')),
                   ('/usr/share/duicontrolpanel/desktops',['pygauth_settings.desktop']),
                   ('/usr/share/duicontrolpanel/uidescriptions',['pygauth_settings.xml']) ],)

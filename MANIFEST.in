@@ -1,4 +1,6 @@
 include *.desktop
+include html/*.html
+include html/*.png
 include qml/*.qml
 include *.png
 include pygauth.longdesc
