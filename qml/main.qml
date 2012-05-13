@@ -4,7 +4,7 @@ import com.nokia.meego 1.0
 PageStackWindow {
     id: appWindow
 
-    property string version: "1.1"
+    property string version: "1.2"
 
     initialPage: mainPage
 
